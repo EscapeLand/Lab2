@@ -27,6 +27,8 @@ HIT SC Lab2
     # 推送到远程仓库上你的分支
     git push origin yourbranch
     ```
+    然后到 [Pull Request](https://github.com/EscapeLand/Lab2/pulls) 查看你的改动，发起Pull Request，以及讨论（互黑）<br>
+
 5. 如果 master 分支有改动的话
     ```shell
     # 拉取远程的 master 分支并与当前分支合并
