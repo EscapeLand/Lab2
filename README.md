@@ -24,7 +24,7 @@ HIT SC Lab2
     ```
 4. ```shell
     # 推送你的分支
-    git push origin yourbranch
+    git push
     ```
     然后到 [Pull Request](https://github.com/EscapeLand/Lab2/pulls) 发起Pull Request，查看你的改动，以及讨论（互黑）<br>
 
