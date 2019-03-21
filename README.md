@@ -20,14 +20,13 @@ HIT SC Lab2
     ```
 3. 当你做了些什么后...
     ```shell
-    # commit，这个你们都知道了
-    git commit "say something here..."
+    git commit -m "say something here..."   # commit，这个你们都知道
     ```
 4. ```shell
-    # 推送到远程仓库上你的分支
-    git push origin yourbranch
+    # 推送你的分支
+    git push
     ```
-    然后到 [Pull Request](https://github.com/EscapeLand/Lab2/pulls) 查看你的改动，发起Pull Request，以及讨论（互黑）<br>
+    然后到 [Pull Request](https://github.com/EscapeLand/Lab2/pulls) 发起Pull Request，查看你的改动，以及讨论（互黑）<br>
 
 5. 如果 master 分支有改动的话
     ```shell
