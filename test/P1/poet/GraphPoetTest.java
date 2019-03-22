@@ -5,6 +5,9 @@ package poet;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.junit.Test;
 
 /**
@@ -21,5 +24,20 @@ public class GraphPoetTest {
     }
     
     // TODO tests
-    
+    @Test
+    public void testGraphPoet_ctor() {
+    	try {
+    		File fs = new File("../../test/P1/poet/seven-words.txt");
+        	GraphPoet gp = new GraphPoet(fs);
+        	System.out.print(gp.toString());
+    	}
+    	catch(IOException ex){
+    		ex.printStackTrace();
+    	}
+    	catch(RuntimeException ex) {
+    		ex.printStackTrace();
+    		return;
+    	}
+    	
+    }
 }
