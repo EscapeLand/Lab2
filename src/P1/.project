@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>ps2</name>
+	<name>P1</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>test</name>
+			<type>2</type>
+			<location>F:/eclipse-workspace/Lab2-1170300431/test/P1</location>
+		</link>
+	</linkedResources>
 </projectDescription>

@@ -3,8 +3,12 @@
  */
 package poet;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.Map;
+import java.util.Set;
 
 import graph.Graph;
 
@@ -68,7 +72,27 @@ public class GraphPoet {
      * @throws IOException if the corpus file cannot be found or read
      */
     public GraphPoet(File corpus) throws IOException {
-        throw new RuntimeException("not implemented");
+        BufferedReader reader = new BufferedReader(new FileReader(corpus));
+        int line = 0;				//line_number
+        
+        for(String buf = reader.readLine(); buf!= null; buf = reader.readLine()) {
+        	line++;
+        	String[] list = buf.split(" ");
+        	graph.add(list[0]);
+        	for(int i = 1; i < list.length; i++) {
+        		if(graph.add(list[i])) {
+        			graph.set(list[i-1], list[i], 1);
+        		}
+        		else {
+        			Integer r = graph.sources(list[i-1]).get(list[i]);
+        			if(r == null) r = 0;
+        			
+        			graph.set(list[i-1], list[i], r + 1);
+        		}
+        	}
+        }
+        
+        reader.close();
     }
     
     // TODO checkRep
@@ -80,9 +104,38 @@ public class GraphPoet {
      * @return poem (as described above)
      */
     public String poem(String input) {
-        throw new RuntimeException("not implemented");
+        String[] list = input.split(" ");
+        StringBuilder r = new StringBuilder();
+        r.append(list[0]);
+        
+        for(int i = 1; i < list.length; i++) {
+        	int max = 0;
+            String max_elm = "";
+        	Map<String, Integer> f1 = graph.targets(list[i-1]);
+        	if(f1.containsKey(list[i])) continue;
+        	for(String j: f1.keySet()) {
+        		Map<String, Integer> f2 = graph.targets(j);
+        		if(f2.containsKey(list[i])) {
+        			int tmp = f1.get(j) + f2.get(list[i]);
+        			if(max < tmp) {
+        				max = tmp;
+        				max_elm = j;
+        			}
+        		}
+        	}
+        	
+        	r.append(' ');
+        	if(max > 0) r.append(max_elm).append(' ');
+        	r.append(list[i]);
+        }
+        
+        return r.toString();
     }
     
     // TODO toString()
+    @Override
+    public String toString() {
+    	return graph.toString();
+    }
     
 }

@@ -20,8 +20,8 @@ public class ConcreteVerticesGraphTest extends GraphInstanceTest {
     /*
      * Provide a ConcreteVerticesGraph for tests in GraphInstanceTest.
      */
-    @Override public Graph<String> emptyInstance() {
-        return new ConcreteVerticesGraph();
+    @Override public <L> Graph<L> emptyInstance() {
+        return new ConcreteVerticesGraph<L>();
     }
     
     /*
@@ -32,7 +32,17 @@ public class ConcreteVerticesGraphTest extends GraphInstanceTest {
     //   TODO
     
     // TODO tests for ConcreteVerticesGraph.toString()
-    
+    @Test
+    public void testToString() {
+    	Graph<String> r = emptyInstance();
+    	r.add("A");
+    	r.add("B");
+    	r.set("A", "B", 2);
+    	
+    	assertEquals("A -> B(2)\nB ->\n", r.toString());
+    	r.set("B", "A", 1);
+    	assertEquals("A -> B(2)\nB -> A(1)\n", r.toString());
+    }
     /*
      * Testing Vertex...
      */

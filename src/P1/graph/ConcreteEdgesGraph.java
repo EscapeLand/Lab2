@@ -4,6 +4,7 @@
 package graph;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -14,10 +15,10 @@ import java.util.Set;
  * 
  * <p>PS2 instructions: you MUST use the provided rep.
  */
-public class ConcreteEdgesGraph implements Graph<String> {
+public class ConcreteEdgesGraph<L> implements Graph<L> {
     
-    private final Set<String> vertices = new HashSet<>();
-    private final List<Edge> edges = new ArrayList<>();
+    private final Set<L> vertices = new HashSet<>();
+    private final List<Edge<L>> edges = new ArrayList<>();
     
     // Abstraction function:
     //   TODO
@@ -30,31 +31,64 @@ public class ConcreteEdgesGraph implements Graph<String> {
     
     // TODO checkRep
     
-    @Override public boolean add(String vertex) {
-        throw new RuntimeException("not implemented");
+    @Override public boolean add(L vertex) {
+        return vertices.add(vertex);
     }
     
-    @Override public int set(String source, String target, int weight) {
-        throw new RuntimeException("not implemented");
+    @Override public int set(L source, L target, int weight) {
+        for(Edge<L> i: edges) {
+        	if(i.from.equals(source) && i.to.equals(target)) return i.setWeight(weight);
+        	
+        }
+        
+        Edge<L> e = new Edge<L>(source, target);
+        e.setWeight(weight);
+        edges.add(e);
+        return 0;
     }
     
-    @Override public boolean remove(String vertex) {
-        throw new RuntimeException("not implemented");
+    @Override public boolean remove(L vertex) {
+        if(vertices.remove(vertex)) edges.removeIf(x -> x.from.equals(vertex) || x.to.equals(vertex));
+        else return false;
+        
+        return true;
     }
     
-    @Override public Set<String> vertices() {
-        throw new RuntimeException("not implemented");
+    @Override public Set<L> vertices() {
+        return new HashSet<>(vertices);
     }
     
-    @Override public Map<String, Integer> sources(String target) {
-        throw new RuntimeException("not implemented");
+    @Override public Map<L, Integer> sources(L target) {
+        Map<L, Integer> r = new HashMap<>();
+        for(Edge<L> i: edges) {
+        	if(i.to.equals(target)) r.put(i.from, i.getWeight());
+        }
+        
+        return r;
     }
     
-    @Override public Map<String, Integer> targets(String source) {
-        throw new RuntimeException("not implemented");
+    @Override public Map<L, Integer> targets(L source) {
+    	Map<L, Integer> r = new HashMap<>();
+        for(Edge<L> i: edges) {
+        	if(i.from.equals(source)) r.put(i.to, i.getWeight());
+        }
+        
+        return r;
     }
     
-    // TODO toString()
+    @Override
+    public String toString(){
+    	StringBuilder s = new StringBuilder();
+    	for(L i: vertices) {
+    		s.append(i.toString()).append(" ->");
+    		for(Edge<L> j: edges) {
+    			if(j.from.equals(i)) s.append(' ').append(j.to.toString()).append('(').append(j.getWeight()).append(')');
+    		}
+    		s.append('\n');
+    	}
+    	
+    	return s.toString();
+    }
     
 }
 
@@ -66,10 +100,12 @@ public class ConcreteEdgesGraph implements Graph<String> {
  * <p>PS2 instructions: the specification and implementation of this class is
  * up to you.
  */
-class Edge {
+class Edge<L> {
     
     // TODO fields
-    
+    public final L from;
+    public final L to;
+    private int weight = 0;
     // Abstraction function:
     //   TODO
     // Representation invariant:
@@ -78,11 +114,25 @@ class Edge {
     //   TODO
     
     // TODO constructor
-    
+    public Edge(L from, L to){
+    	this.from = from;
+    	this.to = to;
+    }
     // TODO checkRep
     
     // TODO methods
-    
+    public int setWeight(int newval){
+    	int prev = weight;
+    	weight = newval;
+    	return prev;
+    }
+    public int getWeight() {
+    	return weight;
+    }
     // TODO toString()
+    @Override
+    public String toString() {
+    	return from.toString() + " -> " + to.toString() + '(' + weight + ')';
+    }
     
 }
