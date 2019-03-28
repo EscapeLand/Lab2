@@ -87,7 +87,7 @@ public class GraphPoet {
         			Integer r = graph.sources(list[i-1]).get(list[i]);
         			if(r == null) r = 0;
         			
-        			graph.set(list[i], list[i+1], r + 1);
+        			graph.set(list[i-1], list[i], r + 1);
         		}
         	}
         }
@@ -111,10 +111,10 @@ public class GraphPoet {
         for(int i = 1; i < list.length; i++) {
         	int max = 0;
             String max_elm = "";
-        	Map<String, Integer> f1 = graph.sources(list[i-1]);
+        	Map<String, Integer> f1 = graph.targets(list[i-1]);
         	if(f1.containsKey(list[i])) continue;
         	for(String j: f1.keySet()) {
-        		Map<String, Integer> f2 = graph.sources(j);
+        		Map<String, Integer> f2 = graph.targets(j);
         		if(f2.containsKey(list[i])) {
         			int tmp = f1.get(j) + f2.get(list[i]);
         			if(max < tmp) {

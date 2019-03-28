@@ -21,3 +21,17 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# IDE configuration
+.metadata/
+.idea/
+
+# binary folders
+src/P1/bin
+src/P2/bin
+src/P3/bin
+src/P4/bin
+test/P1/bin
+test/P2/bin
+test/P3/bin
+test/P4/bin

@@ -80,9 +80,9 @@ public class ConcreteEdgesGraph<L> implements Graph<L> {
     public String toString(){
     	StringBuilder s = new StringBuilder();
     	for(L i: vertices) {
-    		s.append(i.toString()).append(" -> ");
+    		s.append(i.toString()).append(" ->");
     		for(Edge<L> j: edges) {
-    			if(j.from.equals(i)) s.append(j.to.toString()).append(' ');
+    			if(j.from.equals(i)) s.append(' ').append(j.to.toString()).append('(').append(j.getWeight()).append(')');
     		}
     		s.append('\n');
     	}
@@ -132,7 +132,7 @@ class Edge<L> {
     // TODO toString()
     @Override
     public String toString() {
-    	return from.toString() + " -> " + to.toString();
+    	return from.toString() + " -> " + to.toString() + '(' + weight + ')';
     }
     
 }
