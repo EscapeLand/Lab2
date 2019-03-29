@@ -21,15 +21,19 @@ public class ConcreteEdgesGraph<L> implements Graph<L> {
     private final List<Edge<L>> edges = new ArrayList<>();
     
     // Abstraction function:
-    //   TODO
+    //   Set<L> vertices: vertices of the graph.
+	//   List<Edge<L>> edges: edges of the graph.
     // Representation invariant:
-    //   TODO
+    //   for each edge, weight >= 0 and from != to.
     // Safety from rep exposure:
     //   TODO
     
     // TODO constructor
     
-    // TODO checkRep
+    public boolean checkRep(){
+    	for(Edge<L> i: edges) i.checkRep();
+        return true;
+    }
     
     @Override public boolean add(L vertex) {
         return vertices.add(vertex);
@@ -101,26 +105,31 @@ public class ConcreteEdgesGraph<L> implements Graph<L> {
  * up to you.
  */
 class Edge<L> {
-    
-    // TODO fields
     public final L from;
     public final L to;
     private int weight = 0;
+    
     // Abstraction function:
-    //   TODO
+    //   L from: start point.
+	//   L to: end point.
+	//   int weight: weight of the edge.
     // Representation invariant:
-    //   TODO
+    //   weight >= 0 and from != to.
     // Safety from rep exposure:
     //   TODO
     
-    // TODO constructor
     public Edge(L from, L to){
     	this.from = from;
     	this.to = to;
     }
-    // TODO checkRep
     
-    // TODO methods
+    public boolean checkRep() {
+		assert !from.equals(to);
+		assert weight >= 0;
+		
+		return true;
+    }
+    
     public int setWeight(int newval){
     	int prev = weight;
     	weight = newval;
@@ -129,7 +138,7 @@ class Edge<L> {
     public int getWeight() {
     	return weight;
     }
-    // TODO toString()
+    
     @Override
     public String toString() {
     	return from.toString() + " -> " + to.toString() + '(' + weight + ')';

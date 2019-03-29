@@ -16,6 +16,7 @@ public class Player implements Action{
 	
 	@Override
 	public boolean movePiece(Position from, Position to){
+		assert board != null;
 		if(from.equals(to)) return false;
 		
 		Piece a = board.at(from);
@@ -27,6 +28,7 @@ public class Player implements Action{
 	
 	@Override
 	public boolean addPiece(Piece a, Position to){
+		assert board != null;
 		if(a.type == Piece.Type.piece && board.getType() == Game.Type.Chess) return false;
 		if(a.type != Piece.Type.piece && board.getType() == Game.Type.Go) return false;
 		if(!isMyPiece(a)) return false;
@@ -39,6 +41,7 @@ public class Player implements Action{
 	
 	@Override
 	public boolean removePiece(Position where){
+		assert board != null;
 		if(board.getType() != Game.Type.Go) return false;
 		Piece r = board.at(where);
 		if(r == null) return false;
@@ -49,6 +52,7 @@ public class Player implements Action{
 	
 	@Override
 	public boolean replacePiece(Position from, Position to){
+		assert board != null;
 		if(board.getType() != Game.Type.Chess) return false;
 		if(from.equals(to)) return false;
 		Piece a, b;
@@ -63,5 +67,16 @@ public class Player implements Action{
 	@Override
 	public String toString(){
 		return name + "(" +  (black ? "black": "white") + ")";
+	}
+	
+	@Override
+	public boolean equals(Object other){
+		if(other == this) return true;
+		if(other.getClass() != this.getClass()) return false;
+		
+		Player that = (Player) other;
+		return that.name.equals(name) && that.black == this.black
+				//&& that.board.equals(board)
+				;
 	}
 }

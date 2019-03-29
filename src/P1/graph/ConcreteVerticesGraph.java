@@ -21,18 +21,21 @@ public class ConcreteVerticesGraph<L> implements Graph<L> {
     private final List<Vertex<L>> vertices = new ArrayList<>();
     
     // Abstraction function:
-    //   TODO
+    //   List<Vertex<L>> vertices, list of the vertices of the graph.
     // Representation invariant:
-    //   TODO
+    //   for each Vertex in vertices, Vertex do not connect to itself; Vertex.weight >= 0.
     // Safety from rep exposure:
     //   TODO
     
-    // TODO constructor
     private Vertex<L> findVertex(L Label) {
     	for(Vertex<L> i: vertices) if(i.label.equals(Label)) return i;
     	return null;
     }
-    // TODO checkRep
+    public boolean checkRep(){
+    	
+    	
+    	return true;
+    }
     
     @Override public boolean add(L vertex) {
         if(findVertex(vertex) != null) return false;
@@ -114,25 +117,34 @@ public class ConcreteVerticesGraph<L> implements Graph<L> {
 class Vertex<L> {
     private final Map<Vertex<L>, Integer> to = new HashMap<>();
     public final L label;
-    // TODO fields
     
     // Abstraction function:
-    //   TODO
+    //   Map<Vertex<L>, Integer> to, a map that records end point and the weight to it.
     // Representation invariant:
-    //   TODO
+    //   for each i in to, i.value >= 0.
+	//   for each i in to, i.key != label.
     // Safety from rep exposure:
     //   TODO
     
-    // TODO constructor
-    Vertex(L Label){
+    public Vertex(L Label){
     	label = Label;
     }
-    // TODO checkRep
     
-    // TODO methods
+    public boolean checkRep(){
+    	for(Entry<Vertex<L>, Integer> i: to.entrySet()){
+    		assert i.getKey() != label;
+    		assert i.getValue() >= 0;
+	    }
+    	return true;
+    }
+    
     public int setEdge(Vertex<L> target, int weight) {
     	if(weight == 0) return to.remove(target);
-    	else return to.put(target, weight);
+    	else{
+    		Integer r = to.put(target, weight);
+    		if(r == null) return 0;
+    		else return r.intValue();
+	    }
     }
     public int removeEdge(Vertex<L> target) {
     	return to.remove(target);
@@ -147,7 +159,7 @@ class Vertex<L> {
     	}
     	return r;
     }
-    // TODO toString()
+    
     @Override
     public String toString() {
     	StringBuilder s = new StringBuilder();

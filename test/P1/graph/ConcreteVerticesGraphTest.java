@@ -31,7 +31,6 @@ public class ConcreteVerticesGraphTest extends GraphInstanceTest {
     // Testing strategy for ConcreteVerticesGraph.toString()
     //   TODO
     
-    // TODO tests for ConcreteVerticesGraph.toString()
     @Test
     public void testToString() {
     	Graph<String> r = emptyInstance();
@@ -50,6 +49,19 @@ public class ConcreteVerticesGraphTest extends GraphInstanceTest {
     // Testing strategy for Vertex
     //   TODO
     
-    // TODO tests for operations of Vertex
-    
+	@Test
+    public void testVertex(){
+    	Vertex<String> a = new Vertex<>("A");
+	    Vertex<String> b = new Vertex<>("B");
+	
+	    assertTrue(a.checkRep());
+	    assertTrue(b.checkRep());
+	    
+	    assertEquals(0, a.setEdge(b, 10));
+	    assertTrue(a.checkRep());
+		
+		Integer r = a.getMap().get("B");
+	    assertNotNull(r);
+	    assertEquals(10, r.intValue());
+    }
 }
