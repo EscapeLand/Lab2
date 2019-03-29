@@ -38,7 +38,7 @@ public class Board {
 			r = pool[where.x][where.y];
 			if(r != null) r.setPos(new Position(-1, -1));
 		}
-		else r = null;
+		else return null;
 		
 		pool[where.x][where.y] = a;
 		return r;
