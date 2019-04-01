@@ -3,12 +3,7 @@
  */
 package graph;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * An implementation of Graph.
@@ -45,17 +40,15 @@ public class ConcreteEdgesGraph<L> implements Graph<L> {
         	
         }
         
-        Edge<L> e = new Edge<L>(source, target);
+        Edge<L> e = new Edge<>(source, target);
         e.setWeight(weight);
         edges.add(e);
         return 0;
     }
     
     @Override public boolean remove(L vertex) {
-        if(vertices.remove(vertex)) edges.removeIf(x -> x.from.equals(vertex) || x.to.equals(vertex));
+        if(vertices.remove(vertex)) return edges.removeIf(x -> x.from.equals(vertex) || x.to.equals(vertex));
         else return false;
-        
-        return true;
     }
     
     @Override public Set<L> vertices() {
@@ -105,8 +98,8 @@ public class ConcreteEdgesGraph<L> implements Graph<L> {
  * up to you.
  */
 class Edge<L> {
-    public final L from;
-    public final L to;
+    final L from;
+    final L to;
     private int weight = 0;
     
     // Abstraction function:
@@ -118,24 +111,24 @@ class Edge<L> {
     // Safety from rep exposure:
     //   TODO
     
-    public Edge(L from, L to){
+    Edge(L from, L to){
     	this.from = from;
     	this.to = to;
     }
     
-    public boolean checkRep() {
+    boolean checkRep() {
 		assert !from.equals(to);
 		assert weight >= 0;
 		
 		return true;
     }
     
-    public int setWeight(int newval){
+    int setWeight(int newval){
     	int prev = weight;
     	weight = newval;
     	return prev;
     }
-    public int getWeight() {
+    int getWeight() {
     	return weight;
     }
     

@@ -3,9 +3,9 @@
  */
 package graph;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 /**
  * Tests for ConcreteVerticesGraph.
@@ -64,4 +64,17 @@ public class ConcreteVerticesGraphTest extends GraphInstanceTest {
 	    assertNotNull(r);
 	    assertEquals(10, r.intValue());
     }
+    
+    
+	@Test
+	public void testRemove(){
+		Graph<String> r = emptyInstance();
+		r.add("zzs");
+		r.add("zxh");
+		
+		r.set("zzs", "zxh", 10);
+		assertTrue(r.remove("zzs"));
+		
+		assertFalse(r.remove("zzs"));
+	}
 }

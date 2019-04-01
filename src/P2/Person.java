@@ -1,7 +1,7 @@
 public class Person{
-    public final String name;
+    final String name;
 
-    public Person(String Name){
+    Person(String Name){
         name = Name;
     }
 }

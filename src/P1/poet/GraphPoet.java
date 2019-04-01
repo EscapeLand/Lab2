@@ -3,14 +3,14 @@
  */
 package poet;
 
+import graph.Graph;
+import org.jetbrains.annotations.NotNull;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Map;
-import java.util.Set;
-
-import graph.Graph;
 
 /**
  * A graph-based poetry generator.
@@ -59,9 +59,9 @@ public class GraphPoet {
     private final Graph<String> graph = Graph.empty();
     
     // Abstraction function:
-    //   TODO
+    //   graph as the keywords graph of the input text file.
     // Representation invariant:
-    //   TODO
+    //   graph.checkRep() == true.
     // Safety from rep exposure:
     //   TODO
     
@@ -71,12 +71,13 @@ public class GraphPoet {
      * @param corpus text file from which to derive the poet's affinity graph
      * @throws IOException if the corpus file cannot be found or read
      */
-    public GraphPoet(File corpus) throws IOException {
+    GraphPoet(File corpus) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(corpus));
-        int line = 0;				//line_number
+        //int line = 0;				//line_number
         
         for(String buf = reader.readLine(); buf!= null; buf = reader.readLine()) {
-        	line++;
+        	//line++;
+	        buf = buf.toLowerCase();
         	String[] list = buf.split(" ");
         	graph.add(list[0]);
         	for(int i = 1; i < list.length; i++) {
@@ -95,16 +96,19 @@ public class GraphPoet {
         reader.close();
     }
     
-    // TODO checkRep
-    
+    boolean checkRep(){
+	    // TODO checkRep
+	    
+		return true;
+    }
     /**
      * Generate a poem.
      * 
      * @param input string from which to create the poem
      * @return poem (as described above)
      */
-    public String poem(String input) {
-        String[] list = input.split(" ");
+    public String poem(@NotNull String input) {
+        String[] list = input.toLowerCase().split(" ");
         StringBuilder r = new StringBuilder();
         r.append(list[0]);
         
@@ -132,7 +136,6 @@ public class GraphPoet {
         return r.toString();
     }
     
-    // TODO toString()
     @Override
     public String toString() {
     	return graph.toString();

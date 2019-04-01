@@ -6,7 +6,7 @@ public class Board {
 		pool = new Piece[n][n];
 	}
 	
-	public Board(Game.Type type, Player p1, Player p2){
+	Board(Game.Type type, Player p1, Player p2){
 		this.type = type;
 		switch(type) {
 			case Go:
@@ -19,18 +19,18 @@ public class Board {
 		}
 	}
 	
-	public boolean inPool(Position where){
+	boolean inPool(Position where){
 		int n = pool.length;
 		return where.x >= 0 && where.y >= 0 &&
 				where.y < n && where.x < n;
 	}
 	
-	public Piece at(Position where){
+	Piece at(Position where){
 		if(inPool(where)) return Piece.copy(pool[where.x][where.y]);
 		else return null;
 	}
 	
-	public Piece place(Piece a, Position where){
+	Piece place(Piece a, Position where){
 		Piece r;
 		if(a != null) a.setPos(new Position(where.x, where.y));
 		
@@ -62,7 +62,7 @@ public class Board {
 		}
 	}
 	
-	public Game.Type getType(){
+	Game.Type getType(){
 		return type;
 	}
 	

@@ -3,13 +3,12 @@
  */
 package poet;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Tests for GraphPoet.
@@ -28,7 +27,6 @@ public class GraphPoetTest {
         assert false; // make sure assertions are enabled with VM argument: -ea
     }
     
-    // TODO tests
     @Test
     public void testGraphPoet_ctor() {
     	System.out.println(path);
@@ -37,14 +35,10 @@ public class GraphPoetTest {
         	GraphPoet gp = new GraphPoet(fs);
         	//System.out.print(gp.toString());
     	}
-    	catch(IOException ex){
+    	catch(IOException | RuntimeException ex){
     		ex.printStackTrace();
     	}
-    	catch(RuntimeException ex) {
-    		ex.printStackTrace();
-    		return;
-    	}
-    	
+	
     }
 
     @Test
