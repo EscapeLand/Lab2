@@ -27,7 +27,7 @@ public abstract class GraphInstanceTest {
      * 
      * @return a new empty graph of the particular implementation being tested
      */
-    public abstract Graph<String> emptyInstance();
+    public abstract <L> Graph<L> emptyInstance();
     
     @Test(expected=AssertionError.class)
     public void testAssertionsEnabled() {
