@@ -46,11 +46,23 @@ public class GraphPoetTest {
     	try{
 			File fs = new File(path + "/poet/seven-words.txt");
 			GraphPoet gp = new GraphPoet(fs);
-			assertEquals("Upon the place", gp.poem("Upon place"));
+			assertEquals("upon the place", gp.poem("Upon place"));
 		}
     	catch(IOException ex){
     		ex.printStackTrace();
 
+		}
+	}
+	
+	@Test
+	public void testPoem_emmm(){
+		try{
+			File fs = new File(path + "/poet/emmm.txt");
+			GraphPoet gp = new GraphPoet(fs);
+			assertEquals("Seek to explore strange new life and exciting synergies!".toLowerCase(), gp.poem("Seek to explore new and exciting synergies!"));
+		}
+		catch(IOException ex){
+			ex.printStackTrace();
 		}
 	}
 }

@@ -29,11 +29,13 @@ public class ConcreteVerticesGraphTest extends GraphInstanceTest {
      */
     
     // Testing strategy for ConcreteVerticesGraph.toString()
-    //   TODO
+    //   1. test empty graph. 2. simple test. 3. graph with ring.
     
     @Test
     public void testToString() {
     	Graph<String> r = emptyInstance();
+    	assertEquals("", r.toString());
+    	
     	r.add("A");
     	r.add("B");
     	r.set("A", "B", 2);
@@ -47,17 +49,20 @@ public class ConcreteVerticesGraphTest extends GraphInstanceTest {
      */
     
     // Testing strategy for Vertex
-    //   TODO
+    //   simple test and the case when labels are equal; rep test.
     
 	@Test
     public void testVertex(){
     	Vertex<String> a = new Vertex<>("A");
 	    Vertex<String> b = new Vertex<>("B");
+	    Vertex<String> c = new Vertex<>("A");
 	
 	    assertTrue(a.checkRep());
 	    assertTrue(b.checkRep());
 	    
 	    assertEquals(0, a.setEdge(b, 10));
+		assertTrue(a.checkRep());
+		assertEquals(-1, a.setEdge(c, 10));
 	    assertTrue(a.checkRep());
 		
 		Integer r = a.getMap().get("B");

@@ -5,6 +5,7 @@ package poet;
 
 import graph.Graph;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -59,11 +60,11 @@ public class GraphPoet {
     private final Graph<String> graph = Graph.empty();
     
     // Abstraction function:
-    //   graph as the keywords graph of the input text file.
+    //   AF(graph) = the keywords graph of the input text file.
     // Representation invariant:
     //   graph.checkRep() == true.
     // Safety from rep exposure:
-    //   TODO
+    //   field graph is private. safety from exposure.
     
     /**
      * Create a new poet with the graph from corpus (as described above).
@@ -75,22 +76,32 @@ public class GraphPoet {
         BufferedReader reader = new BufferedReader(new FileReader(corpus));
         //int line = 0;				//line_number
         
+	    String end = null;
         for(String buf = reader.readLine(); buf!= null; buf = reader.readLine()) {
         	//line++;
 	        buf = buf.toLowerCase();
-        	String[] list = buf.split(" ");
+        	String[] tmplist = buf.split(" ");
+        	String[] list;
+        	if(end != null) {
+        		list = new String[tmplist.length + 1];
+        		list[0] = end;
+        		for(int i = 1; i < list.length; i++) list[i] = tmplist[i - 1];
+	        }
+        	else list = tmplist;
+	        
         	graph.add(list[0]);
         	for(int i = 1; i < list.length; i++) {
         		if(graph.add(list[i])) {
         			graph.set(list[i-1], list[i], 1);
         		}
         		else {
-        			Integer r = graph.sources(list[i-1]).get(list[i]);
+        			Integer r = graph.sources(list[i - 1]).get(list[i]);
         			if(r == null) r = 0;
         			
         			graph.set(list[i-1], list[i], r + 1);
         		}
         	}
+        	end = list[list.length - 1];
         }
         
         reader.close();
@@ -100,6 +111,28 @@ public class GraphPoet {
 	    // TODO checkRep
 	    
 		return true;
+    }
+    
+    @Nullable
+    private String bridgeWord(String prev, String succ){
+	    int max = 0;
+	    String max_elm = null;
+	    
+	    Map<String, Integer> f1 = graph.targets(prev);
+	    if(f1.containsKey(succ)) return null;
+	    for(String j: f1.keySet()) {
+		    Map<String, Integer> f2 = graph.targets(j);
+		    if(f2.containsKey(succ)) {
+			    int tmp = f1.get(j) + f2.get(succ);
+			    if(max < tmp) {
+				    max = tmp;
+				    max_elm = j;
+			    }
+		    }
+	    }
+	
+	    if(max > 0) return max_elm;
+	    return null;
     }
     /**
      * Generate a poem.
@@ -113,23 +146,10 @@ public class GraphPoet {
         r.append(list[0]);
         
         for(int i = 1; i < list.length; i++) {
-        	int max = 0;
-            String max_elm = "";
-        	Map<String, Integer> f1 = graph.targets(list[i-1]);
-        	if(f1.containsKey(list[i])) continue;
-        	for(String j: f1.keySet()) {
-        		Map<String, Integer> f2 = graph.targets(j);
-        		if(f2.containsKey(list[i])) {
-        			int tmp = f1.get(j) + f2.get(list[i]);
-        			if(max < tmp) {
-        				max = tmp;
-        				max_elm = j;
-        			}
-        		}
-        	}
+        	String tmp = bridgeWord(list[i-1], list[i]);
         	
         	r.append(' ');
-        	if(max > 0) r.append(max_elm).append(' ');
+        	if(tmp != null) r.append(tmp).append(' ');
         	r.append(list[i]);
         }
         

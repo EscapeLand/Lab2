@@ -16,11 +16,11 @@ public class ConcreteVerticesGraph<L> implements Graph<L> {
     private final List<Vertex<L>> vertices = new ArrayList<>();
     
     // Abstraction function:
-    //   List<Vertex<L>> vertices, list of the vertices of the graph.
+    //   AF(vertices) = list of the vertices of the graph.
     // Representation invariant:
     //   for each Vertex in vertices, Vertex do not connect to itself; Vertex.weight >= 0.
     // Safety from rep exposure:
-    //   TODO
+    //   all field private.
     
     private Vertex<L> findVertex(L Label) {
     	for(Vertex<L> i: vertices) if(i.getLabel().equals(Label)) return i;
@@ -51,8 +51,9 @@ public class ConcreteVerticesGraph<L> implements Graph<L> {
     		t = new Vertex<>(target);
     		vertices.add(t);
     	}
-    	
-    	return s.setEdge(t, weight);
+	
+	    int r = s.setEdge(t, weight);
+    	return r == -1 ? 0 : r;
     }
     
     @Override public boolean remove(L vertex) {
@@ -112,12 +113,12 @@ class Vertex<L> {
     private L label;
     
     // Abstraction function:
-    //   Map<Vertex<L>, Integer> to, a map that records end point and the weight to it.
+    //   AF(to) = a map that records end point and the weight to it.
     // Representation invariant:
     //   for each i in to, i.value >= 0.
 	//   for each i in to, i.key != label.
     // Safety from rep exposure:
-    //   TODO
+    //   Map to is mutable, and private. label as private.
     
     Vertex(L Label){
     	label = Label;
@@ -132,6 +133,7 @@ class Vertex<L> {
     }
     
     int setEdge(Vertex<L> target, int weight) {
+    	if(target.getLabel() == label) return -1;
     	if(weight == 0) return to.remove(target);
     	else{
     		Integer r = to.put(target, weight);
@@ -169,7 +171,7 @@ class Vertex<L> {
     	StringBuilder s = new StringBuilder();
     	s.append(label).append(" ->");
     	for(Entry<Vertex<L>, Integer> i: to.entrySet()) {
-    		s.append('\t').append(i.getKey().label.toString());
+    		s.append(' ').append(i.getKey().label.toString());
     		s.append("(").append(i.getValue()).append(")");
     	}
     	return s.toString();

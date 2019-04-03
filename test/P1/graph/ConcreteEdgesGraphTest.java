@@ -27,11 +27,12 @@ public class ConcreteEdgesGraphTest extends GraphInstanceTest {
      */
     
     // Testing strategy for ConcreteEdgesGraph.toString()
-    //   TODO
+    //   1. empty graph. 2. simple graph. 3. graph with ring.
 	
     @Test
     public void testToString() {
     	Graph<String> r = emptyInstance();
+    	assertEquals("", r.toString());
     	r.add("A");
     	r.add("B");
     	r.set("A", "B", 2);
@@ -45,7 +46,7 @@ public class ConcreteEdgesGraphTest extends GraphInstanceTest {
      */
     
     // Testing strategy for Edge
-    //   TODO
+    //   just simple test for each method. and test rep invariant.
 	
     @Test
     public void testEdge() {

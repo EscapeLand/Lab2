@@ -16,14 +16,12 @@ public class ConcreteEdgesGraph<L> implements Graph<L> {
     private final List<Edge<L>> edges = new ArrayList<>();
     
     // Abstraction function:
-    //   Set<L> vertices: vertices of the graph.
-	//   List<Edge<L>> edges: edges of the graph.
+    //   AF(vertices) = vertices of the graph.
+	//   AF(edges) = edges of the graph.
     // Representation invariant:
     //   for each edge, weight >= 0 and from != to.
     // Safety from rep exposure:
-    //   TODO
-    
-    // TODO constructor
+    //   all field private.
     
     public boolean checkRep(){
     	for(Edge<L> i: edges) i.checkRep();
@@ -37,7 +35,6 @@ public class ConcreteEdgesGraph<L> implements Graph<L> {
     @Override public int set(L source, L target, int weight) {
         for(Edge<L> i: edges) {
         	if(i.from.equals(source) && i.to.equals(target)) return i.setWeight(weight);
-        	
         }
         
         Edge<L> e = new Edge<>(source, target);
@@ -97,19 +94,18 @@ public class ConcreteEdgesGraph<L> implements Graph<L> {
  * <p>PS2 instructions: the specification and implementation of this class is
  * up to you.
  */
-class Edge<L> {
+final class Edge<L> {
     final L from;
     final L to;
     private int weight = 0;
     
     // Abstraction function:
-    //   L from: start point.
-	//   L to: end point.
+    //   AF(from, to, weight) = an edge from 'from' to 'to', with weight 'weight'.
 	//   int weight: weight of the edge.
     // Representation invariant:
     //   weight >= 0 and from != to.
     // Safety from rep exposure:
-    //   TODO
+    //  type L is a immutable, safety from exposure; other fields as private.
     
     Edge(L from, L to){
     	this.from = from;
@@ -128,6 +124,7 @@ class Edge<L> {
     	weight = newval;
     	return prev;
     }
+    
     int getWeight() {
     	return weight;
     }
