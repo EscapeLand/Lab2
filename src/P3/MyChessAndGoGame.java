@@ -135,13 +135,13 @@ public class MyChessAndGoGame {
 				break;
 			case 3:
 				if(r != 3) r = -1;
-				else ret.put(cmdEnum.a, new Position(Integer.valueOf(ops[1]), Integer.valueOf(ops[2])));
+				else ret.put(cmdEnum.a, new Position(Integer.valueOf(ops[2]), Integer.valueOf(ops[1])));
 				break;
 			case 4:
 				if(r != 1) r = -1;
 				else try{
 					ret.put(cmdEnum.type, Piece.cast_Type(ops[1]));
-					ret.put(cmdEnum.a, new Position(Integer.valueOf(ops[2]), Integer.valueOf(ops[3])));
+					ret.put(cmdEnum.a, new Position(Integer.valueOf(ops[3]), Integer.valueOf(ops[2])));
 				}
 				catch (IllegalArgumentException ex){
 					r = -1;
@@ -149,10 +149,13 @@ public class MyChessAndGoGame {
 				break;
 			case 5:
 				if(r == 2 || r == 4){
-					ret.put(cmdEnum.a, new Position(Integer.valueOf(ops[1]), Integer.valueOf(ops[2])));
-					ret.put(cmdEnum.b, new Position(Integer.valueOf(ops[3]), Integer.valueOf(ops[4])));
+					ret.put(cmdEnum.a, new Position(Integer.valueOf(ops[2]), Integer.valueOf(ops[1])));
+					ret.put(cmdEnum.b, new Position(Integer.valueOf(ops[4]), Integer.valueOf(ops[3])));
 				}
 				else r = -1;
+				break;
+			default:
+				r = -1;
 				break;
 		}
 		
