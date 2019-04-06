@@ -1,9 +1,9 @@
 
 
 public class Position {
-	public final int x, y;
+	final int x, y;
 	
-	public Position(int x, int y){
+	Position(int x, int y){
 		this.x = x;
 		this.y = y;
 	}

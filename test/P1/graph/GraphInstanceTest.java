@@ -3,11 +3,11 @@
  */
 package graph;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 import java.util.Collections;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Tests for instance methods of Graph.

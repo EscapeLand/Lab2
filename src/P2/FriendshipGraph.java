@@ -1,26 +1,29 @@
-import graph.*;
+import graph.Graph;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class FriendshipGraph{
     private Graph<Person> graph = Graph.empty();
     private List<Person> visit = new ArrayList<>();
     
-    public boolean addVertex(Person v){
+    boolean addVertex(Person v){
     	Set<Person> s = graph.vertices();
     	for(Person i: s) if(i.name.equals(v.name)) return false;
     	
         return graph.add(v);
     }
 
-    public boolean addEdge(Person a, Person b){
+    boolean addEdge(Person a, Person b){
 	    Set<Person> s = graph.vertices();
 		if(s.contains(a) && s.contains(b))
 	        return graph.set(a, b, 1) == 0;
 		else return false;
     }
 
-    public int getDistance(Person a, Person b){
+    int getDistance(Person a, Person b){
 	    if(a.equals(b)) return 0;
 	    int n = graph.vertices().size();
 	    visit.add(a);

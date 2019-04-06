@@ -2,11 +2,9 @@
  * Redistribution of original or derived work requires permission of course staff.
  */
 package graph;
-
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 
+import static org.junit.Assert.*;
 /**
  * Tests for ConcreteEdgesGraph.
  * 
@@ -29,10 +27,12 @@ public class ConcreteEdgesGraphTest extends GraphInstanceTest {
      */
     
     // Testing strategy for ConcreteEdgesGraph.toString()
-    //   TODO
+    //   1. empty graph. 2. simple graph. 3. graph with ring.
+	
     @Test
     public void testToString() {
     	Graph<String> r = emptyInstance();
+    	assertEquals("", r.toString());
     	r.add("A");
     	r.add("B");
     	r.set("A", "B", 2);
@@ -46,8 +46,9 @@ public class ConcreteEdgesGraphTest extends GraphInstanceTest {
      */
     
     // Testing strategy for Edge
-    //   TODO
-    
+    //   just simple test for each method. and test rep invariant.
+	
+    @Test
     public void testEdge() {
     	Edge<String> a = new Edge<>("A", "B");
     	Edge<String> b = new Edge<>("B", "A");
@@ -66,5 +67,17 @@ public class ConcreteEdgesGraphTest extends GraphInstanceTest {
     	
     	assertEquals("A -> B(2)", a.toString());
     	assertEquals("B -> A(1)", b.toString());
+    }
+    
+    @Test
+    public void testRemove(){
+        Graph<String> r = emptyInstance();
+        r.add("zzs");
+        r.add("zxh");
+        
+        r.set("zzs", "zxh", 10);
+        assertTrue(r.remove("zzs"));
+        
+        assertFalse(r.remove("zzs"));
     }
 }

@@ -1,18 +1,18 @@
 public class Player implements Action{
-	public final String name;
+	final String name;
 	private Board board;
-	public final boolean black;
+	final boolean black;
 	
-	public Player(boolean black, String Name){
+	Player(boolean black, String Name){
 		this.black = black;
 		name = Name;
 	}
 	
-	public void changeBoard(Board newb){
+	void changeBoard(Board newb){
 		board = newb;
 	}
 	
-	public boolean isMyPiece(Piece a) { return a.owner == this; }
+	private boolean isMyPiece(Piece a) { return a.owner == this; }
 	
 	@Override
 	public boolean movePiece(Position from, Position to){

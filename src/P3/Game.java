@@ -4,10 +4,10 @@ public class Game {
 	}
 	
 	private Board board;
-	private Player P1 = null, P2 = null;
+	private Player P1, P2;
 	private String current;
 	
-	public Game(Type type, String p1, String p2){
+	Game(Type type, String p1, String p2){
 		P1 = new Player(false, p1);
 		P2 = new Player(true, p2);
 		board = new Board(type, P1, P2);
@@ -15,21 +15,18 @@ public class Game {
 		P2.changeBoard(board);
 	}
 	
-	public Player[] getPlayer(){
+	Player[] getPlayer(){
 		assert P1 != null && P2 != null;
 		return new Player[]{P1, P2};
 	}
 	
 	@Override
 	public String toString(){
-		StringBuilder r = new StringBuilder();
-		r.append("<html><table border = \"1\"><caption>Current: ").append(current).append("\n</caption>");
-		r.append(board.toString()).append("</table></html>");
-		
-		return r.toString();
+		return "<html><table border = \"1\"><caption>Current: " + current + "\n</caption>" +
+				board.toString() + "</table></html>";
 	}
 	
-	public void setCurrent(String name){
+	void setCurrent(String name){
 		current = name;
 	}
 	

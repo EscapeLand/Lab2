@@ -1,14 +1,16 @@
+import org.jetbrains.annotations.NotNull;
+
 import javax.swing.*;
 import java.awt.*;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 public class MyChessAndGoGame {
-	static Game game;
-	static List<String> history = new ArrayList<>();
-	static String P1, P2;
-	static String[] op = new String[]{"add", "move", "remove", "replace"};
-	enum cmdEnum{
+	private static List<String> history = new ArrayList<>();
+	private static String P1, P2;
+	private static String[] op = new String[]{"add", "move", "remove", "replace"};
+	
+	private enum cmdEnum{
 		retval, type, a, b
 	}
 	
@@ -37,7 +39,7 @@ public class MyChessAndGoGame {
 		}
 	}
 	
-	static void play(Game.Type type){
+	private static void play(@NotNull Game.Type type){
 		JFrame wnd = new JFrame(type.toString());
 		switch (type){
 			case Chess: wnd.setBounds(600, 150, 360, 420); break;
@@ -54,7 +56,7 @@ public class MyChessAndGoGame {
 		
 		wnd.setVisible(true);
 		Scanner scan = new Scanner(System.in);
-		game = new Game(type, P1, P2);
+		Game game = new Game(type, P1, P2);
 		Player[] P = game.getPlayer();
 		menu(type);
 		
@@ -110,11 +112,11 @@ public class MyChessAndGoGame {
 		wnd.dispose();
 	}
 	
-	static EnumMap<cmdEnum, Object> parseCmd(String cmd) throws NumberFormatException{
+	private static EnumMap<cmdEnum, Object> parseCmd(String cmd) throws NumberFormatException{
 		List<String> org = new ArrayList<>(Arrays.asList(cmd.split("[,\\s]")));
-		org.removeIf(x -> x.isEmpty());
-		String[] ops = org.toArray(new String[org.size()]);
-		EnumMap<cmdEnum, Object> ret = new EnumMap<cmdEnum, Object>(cmdEnum.class);
+		org.removeIf(String::isEmpty);
+		String[] ops = org.toArray(new String[0]);
+		EnumMap<cmdEnum, Object> ret = new EnumMap<>(cmdEnum.class);
 		int r = -1;
 		
 		if(ops.length == 0) return ret;
@@ -133,13 +135,13 @@ public class MyChessAndGoGame {
 				break;
 			case 3:
 				if(r != 3) r = -1;
-				else ret.put(cmdEnum.a, new Position(Integer.valueOf(ops[1]), Integer.valueOf(ops[2])));
+				else ret.put(cmdEnum.a, new Position(Integer.valueOf(ops[2]), Integer.valueOf(ops[1])));
 				break;
 			case 4:
 				if(r != 1) r = -1;
 				else try{
 					ret.put(cmdEnum.type, Piece.cast_Type(ops[1]));
-					ret.put(cmdEnum.a, new Position(Integer.valueOf(ops[2]), Integer.valueOf(ops[3])));
+					ret.put(cmdEnum.a, new Position(Integer.valueOf(ops[3]), Integer.valueOf(ops[2])));
 				}
 				catch (IllegalArgumentException ex){
 					r = -1;
@@ -147,10 +149,13 @@ public class MyChessAndGoGame {
 				break;
 			case 5:
 				if(r == 2 || r == 4){
-					ret.put(cmdEnum.a, new Position(Integer.valueOf(ops[1]), Integer.valueOf(ops[2])));
-					ret.put(cmdEnum.b, new Position(Integer.valueOf(ops[3]), Integer.valueOf(ops[4])));
+					ret.put(cmdEnum.a, new Position(Integer.valueOf(ops[2]), Integer.valueOf(ops[1])));
+					ret.put(cmdEnum.b, new Position(Integer.valueOf(ops[4]), Integer.valueOf(ops[3])));
 				}
 				else r = -1;
+				break;
+			default:
+				r = -1;
 				break;
 		}
 		
@@ -158,7 +163,7 @@ public class MyChessAndGoGame {
 		return ret;
 	}
 	
-	static void menu(Game.Type ty){
+	private static void menu(Game.Type ty){
 		switch (ty){
 			case Go: System.out.print("1. add Type P0\n2. move P1, P2\n3. replace P1, P2\n0. skip");
 			break;
