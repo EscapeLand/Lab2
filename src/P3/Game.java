@@ -20,6 +20,11 @@ public class Game {
 		return new Player[]{P1, P2};
 	}
 	
+	boolean checkRep(){
+		assert !P1.name.equals(P2.name);
+		return false;
+	}
+	
 	@Override
 	public String toString(){
 		return "<html><table border = \"1\"><caption>Current: " + current + "\n</caption>" +

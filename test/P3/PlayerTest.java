@@ -28,6 +28,8 @@ public class PlayerTest {
 		zzs.changeBoard(b);
 		zxh.changeBoard(b);
 		
+		assertFalse(zzs.addPiece(new Piece(Piece.Type.queen, zzs), new Position(-1, -1)));
+		assertFalse(zzs.addPiece(new Piece(Piece.Type.piece, zzs), new Position(0, 0)));
 		assertFalse(zzs.addPiece(new Piece(Piece.Type.queen, zzs), new Position(0, 0)));
 		assertTrue(zzs.addPiece(new Piece(Piece.Type.queen, zzs), new Position(2, 0)));
 	}
@@ -36,15 +38,17 @@ public class PlayerTest {
 	public void testMove(){
 		Board b = new Board(Game.Type.Chess, zzs, zxh);
 		zzs.changeBoard(b);
-		zzs.changeBoard(b);
+		zxh.changeBoard(b);
 		
 		zzs.addPiece(new Piece(Piece.Type.queen, zzs), new Position(2, 0));
+		zxh.addPiece(new Piece(Piece.Type.king, zxh), new Position(7, 7));
 		assertTrue(zzs.movePiece(new Position(2, 0), new Position(2, 1)));
 		assertNull(b.at(new Position(2, 0)));
 		assertFalse(zzs.movePiece(new Position(-1, -1), new Position(1,1)));
 		assertFalse(zzs.movePiece(new Position(7,0), new Position(3, 0)));
 		assertFalse(zzs.movePiece(new Position(2, 1), new Position(2, 1)));
 		assertFalse(zzs.movePiece(new Position(2, 1), new Position(7, 0)));
+		assertFalse(zzs.movePiece(new Position(7, 7),  new Position(7, 6)));
 	}
 	
 	@Test
@@ -78,5 +82,6 @@ public class PlayerTest {
 		assertNull(b.at(_55));
 		
 		assertFalse(zzs.removePiece(_55));
+		assertFalse(zzs.removePiece(new Position(-1, -1)));
 	}
 }
