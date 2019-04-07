@@ -66,6 +66,11 @@ public class Board {
 		return type;
 	}
 	
+	boolean checkRep(){
+		for(Piece[] i: pool) for(Piece j: i) assert inPool(j.getPos());
+		return true;
+	}
+	
 	@Override
 	public String toString(){
 		int n = pool.length;

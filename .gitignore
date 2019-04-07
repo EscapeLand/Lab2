@@ -35,3 +35,5 @@ test/P1/bin
 test/P2/bin
 test/P3/bin
 test/P4/bin
+
+*.iml

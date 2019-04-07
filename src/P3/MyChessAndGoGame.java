@@ -47,7 +47,6 @@ public class MyChessAndGoGame {
 		}
 		
 		wnd.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		wnd.setAlwaysOnTop(!wnd.isAlwaysOnTop());
 		JPanel pnl = new JPanel();
 		wnd.add(pnl);
 		JLabel lbl = new JLabel();
@@ -55,6 +54,7 @@ public class MyChessAndGoGame {
 		pnl.add(lbl);
 		
 		wnd.setVisible(true);
+		wnd.toFront();
 		Scanner scan = new Scanner(System.in);
 		Game game = new Game(type, P1, P2);
 		Player[] P = game.getPlayer();
